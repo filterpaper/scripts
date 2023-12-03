@@ -38,7 +38,7 @@ jobs:
       if: env.days > 0
       uses: actions/github-script@v7
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ github.token }}
         script: |
           const number_of_days = ${{ env.days }};
           const milliseconds_per_day = 86400000;
@@ -76,7 +76,7 @@ jobs:
       if: inputs.delete-all-incomplete
       uses: actions/github-script@v7
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ github.token }}
         script: |
           // Retrieve list of cancelled workflows
           const cancelled = await github.rest.actions.listWorkflowRunsForRepo({
@@ -122,7 +122,7 @@ jobs:
       if: inputs.delete-all-completed
       uses: actions/github-script@v7
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ github.token }}
         script: |
           // Retrieve list of completed workflows
           const completed = await github.rest.actions.listWorkflowRunsForRepo({

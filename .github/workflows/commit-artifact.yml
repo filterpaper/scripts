@@ -4,9 +4,9 @@ on:
     inputs:
       artifact_name:
         description: "Name of artifact to download"
-        required: true
+        required: false
         type: string
-        default: artifact
+        default: ''
       artifact_folder:
         description: "Folder name to store artifacts"
         required: true

@@ -29,6 +29,8 @@ jobs:
 
     - name: Download artifact
       uses: actions/download-artifact@main
+      with:
+        merge-multiple: true
 
     - name: Publish ${{ inputs.release_tag }} release
       uses: softprops/action-gh-release@master

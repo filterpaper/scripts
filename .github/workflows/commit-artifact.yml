@@ -9,9 +9,9 @@ on:
         default: ''
       artifact_folder:
         description: "Folder name to store artifacts"
-        required: true
+        required: false
         type: string
-        default: folder
+        default: .
 
 jobs:
   commit:
@@ -29,6 +29,7 @@ jobs:
       with: 
         name: ${{ inputs.artifact_name }}
         path: ${{ inputs.artifact_folder }}
+        merge-multiple: true
 
     - name: Get last commit message
       run: echo "commit_msg=$(git log -1 --pretty=%s)" >> $GITHUB_ENV

@@ -33,7 +33,7 @@ jobs:
         merge-multiple: true
 
     - name: Publish ${{ inputs.release_tag }} release
-      uses: softprops/action-gh-release@master
+      uses: softprops/action-gh-release@v2
       with:
         name: ${{ inputs.release_name }}
         tag_name: ${{ inputs.release_tag }}

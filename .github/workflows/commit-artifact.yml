@@ -25,7 +25,7 @@ jobs:
         fetch-depth: 2
 
     - name: Download ${{ inputs.artifact_name }}
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with: 
         name: ${{ inputs.artifact_name }}
         path: ${{ inputs.artifact_folder }}

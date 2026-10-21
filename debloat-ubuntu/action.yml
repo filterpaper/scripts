@@ -1,0 +1,48 @@
+name: "Debloat Ubuntu runner"
+description: "Reclaims disk space by removing unused toolchains, SDKs, and heavy packages."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Initial disk space
+      shell: bash
+      run: df -h /
+
+    - name: Remove large toolchains and SDKs
+      shell: bash
+      run: | # Reclaims about 27GB
+        for dir in \
+          /usr/local/lib/android \
+          /usr/share/dotnet \
+          /usr/local/.ghcup \
+          /opt/ghc \
+          /usr/local/share/boost \
+          /usr/lib/llvm-* \
+          /opt/hostedtoolcache/*; do
+            if [ -e "$dir" ]; then
+              echo "Removing: $dir"
+              sudo rm -rf "$dir"
+            fi
+        done
+
+    - name: Purge large unused packages
+      shell: bash
+      run: | # Reclaims about 7GB
+        sudo apt-get remove -y --purge \
+          azure-cli \
+          google-cloud-cli \
+          microsoft-edge-stable \
+          google-chrome-stable \
+          firefox \
+          postgresql* \
+          mysql* \
+          temurin-* \
+          php*
+
+        sudo apt-get clean
+        sudo docker image prune -a -f
+        sudo systemctl stop docker.service docker.socket containerd.service || true
+
+    - name: Final disk space
+      shell: bash
+      run: df -h /
